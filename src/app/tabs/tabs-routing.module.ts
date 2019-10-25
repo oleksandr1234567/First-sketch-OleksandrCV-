@@ -4,7 +4,12 @@ import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: '',
+    redirectTo: '/members/tab1',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
     component: TabsPage,
     children: [
       {
@@ -38,18 +43,28 @@ const routes: Routes = [
         ]
       },
       {
-        path: '',
-        redirectTo: '/tabs/tab1',
-        pathMatch: 'full'
-      }
-    ]
+        path: 'skills',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../skills/skills.module').then(m => m.SkillsPageModule)
+          }
+                ]
+      },
+      {
+        path: 'experience',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../experience/experience.module').then(m => m.ExperiencePageModule)
+          }
+                ]
+      },
+    ],
   },
-  {
-    path: '',
-    redirectTo: '/tabs/tab1',
-    pathMatch: 'full'
-  }
-];
+  ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
